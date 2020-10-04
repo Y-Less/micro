@@ -21,13 +21,7 @@
     <ClInclude Include="SDK\amx\sclinux.h">
       <Filter>amx</Filter>
     </ClInclude>
-    <ClInclude Include="array.h" />
-    <ClInclude Include="data.h" />
-    <ClInclude Include="enum.h" />
-    <ClInclude Include="specifiers.h" />
-    <ClInclude Include="sscanf.h" />
-    <ClInclude Include="utils.h" />
-    <ClInclude Include="args.h" />
+    <ClInclude Include="micro.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SDK\amxplugin.cpp">
@@ -36,16 +30,10 @@
     <ClCompile Include="SDK\amx\getch.c">
       <Filter>amx</Filter>
     </ClCompile>
-    <ClCompile Include="array.cpp" />
-    <ClCompile Include="data.cpp" />
-    <ClCompile Include="enum.cpp" />
-    <ClCompile Include="specifiers.cpp" />
-    <ClCompile Include="sscanf.cpp" />
-    <ClCompile Include="utils.cpp" />
-    <ClCompile Include="kustom.cpp" />
+    <ClCompile Include="micro.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="sscanf.def">
+    <None Include="micro.def">
       <Filter>amx</Filter>
     </None>
   </ItemGroup>

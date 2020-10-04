@@ -31,59 +31,6 @@
 typedef
 	void (* logprintf_t)(char *, ...);
 
-typedef
-	char * (* GetServer_t)();
-
-#define SSCANF_FAIL_RETURN (-1)
-#define SSCANF_CONT_RETURN (((unsigned int)-1) >> 1)
-#define SSCANF_TRUE_RETURN (0)
-
-// Capped for memory reasons.  I chose 32 because it's a reasonable length for
-// many uses and frankly if they get warnings and don't fix them it's their
-// own fault if they have problems with strings!
-#define SSCANF_MAX_LENGTH (32)
-
-// 32 bit special float values.
-#define FLOAT_INFINITY          (0x7F800000)
-#define FLOAT_NEG_INFINITY      (0xFF800000)
-#define FLOAT_NAN               (0xFFFFFFFF)
-#define FLOAT_NAN_E             (0x7FFFFFFF)
-#define FLOAT_NEGATIVE_INFINITY (FLOAT_NEG_INFINITY)
-
-#define SSCANF_QUIET 0
-
-//void SscanfWarning(char const *, ...);
-//void SscanfError(char const *, ...);
-
-#define SscanfWarning(str,...) \
-	do																								                    \
-	{																								                    \
-		if (SscanfErrLine()) logprintf("sscanf warning (%s:%d): " #str, gCallFile, gCallLine, ##__VA_ARGS__);           \
-		else logprintf("%s warning (`%s`): " #str, gCallFile, gFormat, ##__VA_ARGS__);		                            \
-	}																								                    \
-	while (0)
-
-#define SscanfError(str,...) \
-	do																						                            \
-	{																						                            \
-		if (SscanfErrLine()) logprintf("sscanf error (%s:%d): " #str, gCallFile, gCallLine, ##__VA_ARGS__);             \
-		else logprintf("%s error (`%s`): " #str, gCallFile, gFormat, ##__VA_ARGS__);	                                \
-	}																						                            \
-	while (0)
-
-bool SscanfErrLine();
-typedef int32_t cell;
-
-extern char
-	* gFormat,
-	* gCallFile;
-
-extern int
-	gCallLine;
-
-extern cell
-	* gCallResolve;
-
 #if defined __cplusplus
 	#define PAWN_NATIVE_EXTERN extern "C"
 #else
