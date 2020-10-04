@@ -39,7 +39,7 @@ typedef cell (*sscanf_t)(AMX * amx, char * string, char * format, cell * params,
 sscanf_t sscanf;
 
 static cell AMX_NATIVE_CALL
-	n_SSCANF_Remote(AMX * amx, cell * params)
+	n_SSCANF_Test__(AMX * amx, cell * params)
 {
 	return 42;
 }
@@ -107,7 +107,7 @@ PLUGIN_EXPORT void PLUGIN_CALL
 AMX_NATIVE_INFO
 	microNatives[] =
 		{
-			{"SSCANF_Remote", n_SSCANF_Remote},
+			{"SSCANF_Test__", n_SSCANF_Test__},
 			{0,        0}
 		};
 
