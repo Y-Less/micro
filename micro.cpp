@@ -39,7 +39,7 @@ extern void *
 	pAMXFunctions;
 
 typedef cell (PAWN_NATIVE_API *sscanf_t)(AMX * amx, char * string, char * format, cell * params, int paramCount, char * file, int line);
-sscanf_t sscanf;
+sscanf_t PawnSScanf;
 
 #ifdef _WIN32
 	static bool FindSscanf()
@@ -69,10 +69,10 @@ sscanf_t sscanf;
 
 		if (dll)
 		{
-			sscanf = (sscanf_t)GetProcAddress(dll, "sscanf");
-			if (sscanf)
+			PawnSScanf = (sscanf_t)GetProcAddress(dll, "sscanf");
+			if (PawnSScanf)
 			{
-				logprintf("    succeeded: %p.\n", sscanf);
+				logprintf("    succeeded: %p.\n", PawnSScanf);
 				return true;
 			}
 			else
@@ -95,7 +95,7 @@ static cell AMX_NATIVE_CALL
 {
 	char string[] = "42,hello world,111";
 	char format[] = "p<,>is[16]i";
-	cell ret = sscanf(amx, string, format, params + 3, params[0] / 4 - 2, "micro", -1);
+	cell ret = PawnSScanf(amx, string, format, params + 3, params[0] / 4 - 2, "micro", -1);
 	return ret;
 }
 
