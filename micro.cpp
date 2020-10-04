@@ -41,6 +41,55 @@ extern void *
 typedef cell (PAWN_NATIVE_API *sscanf_t)(AMX * amx, char * string, char * format, cell * params, int paramCount, char * file, int line);
 sscanf_t sscanf;
 
+#ifdef _WIN32
+	static bool FindSscanf()
+	{
+		// Find if sscanf is already loaded:
+		logprintf("Finding sscanf...");
+		HANDLE server = GetCurrentProcess();
+		HMODULE hMods[1024];
+		DWORD cbNeeded;
+		HMODULE dll = 0;
+		if (EnumProcessModules(server, hMods, sizeof(hMods), &cbNeeded))
+		{
+			for (unsigned int i = 0; i < (cbNeeded / sizeof(HMODULE)); i++)
+			{
+				TCHAR szModName[MAX_PATH];
+				if (GetModuleFileNameEx(server, hMods[i], szModName, sizeof(szModName) / sizeof(TCHAR)))
+				{
+					int len = strlen(szModName);
+					if (len >= 11 && strcmp("\\sscanf.DLL", szModName + len - 11) == 0)
+					{
+						dll = hMods[i];
+						break;
+					}
+				}
+			}
+		}
+
+		if (dll)
+		{
+			sscanf = (sscanf_t)GetProcAddress(dll, "sscanf");
+			if (sscanf)
+			{
+				logprintf("    succeeded: %p.\n", sscanf);
+				return true;
+			}
+			else
+			{
+				logprintf("    failed, ensure the plugin version is at least 2.10.3.\n");
+				return false;
+			}
+		}
+		else
+		{
+			logprintf("    failed, ensure the sscanf plugin is loaded first.\n");
+			return false;
+		}
+	}
+#else
+#endif
+
 static cell AMX_NATIVE_CALL
 	n_SSCANF_Test__(AMX * amx, cell * params)
 {
@@ -61,49 +110,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL
 {
 	pAMXFunctions = ppData[PLUGIN_DATA_AMX_EXPORTS];
 	logprintf = (logprintf_t)ppData[PLUGIN_DATA_LOGPRINTF];
-	logprintf("Finding sscanf...");
-	
-	// Find if sscanf is already loaded:
-	HANDLE server = GetCurrentProcess();
-	HMODULE hMods[1024];
-	DWORD cbNeeded;
-	HMODULE dll = 0;
-	if (EnumProcessModules(server, hMods, sizeof(hMods), &cbNeeded))
-	{
-		for (unsigned int i = 0; i < (cbNeeded / sizeof(HMODULE)); i++)
-		{
-			TCHAR szModName[MAX_PATH];
-			if (GetModuleFileNameEx(server, hMods[i], szModName, sizeof(szModName) / sizeof(TCHAR)))
-			{
-				int len = strlen(szModName);
-				if (len >= 11 && strcmp("\\sscanf.DLL", szModName + len - 11) == 0)
-				{
-					dll = hMods[i];
-					break;
-				}
-			}
-		}
-	}
-
-	if (dll)
-	{
-		sscanf = (sscanf_t)GetProcAddress(dll, "sscanf");
-		if (sscanf)
-		{
-			logprintf("    succeeded: %p.\n", sscanf);
-			return true;
-		}
-		else
-		{
-			logprintf("    failed, ensure the plugin version is at least 2.10.3.\n");
-			return false;
-		}
-	}
-	else
-	{
-		logprintf("    failed, ensure the sscanf plugin is loaded first.\n");
-		return false;
-	}
+	return FindSscanf();
 }
 
 PLUGIN_EXPORT void PLUGIN_CALL
