@@ -1,4 +1,4 @@
-LIBRARY	"SSCANF"
+LIBRARY	"MICRO"
 EXPORTS
 	Supports
 	Load

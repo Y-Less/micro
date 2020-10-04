@@ -38,6 +38,7 @@ logprintf_t
 static cell AMX_NATIVE_CALL
 	n_SSCANF_Remote(AMX * amx, cell * params)
 {
+	return 42;
 }
 
 PLUGIN_EXPORT unsigned int PLUGIN_CALL
@@ -51,6 +52,7 @@ PLUGIN_EXPORT bool PLUGIN_CALL
 {
 	logprintf = (logprintf_t)ppData[PLUGIN_DATA_LOGPRINTF];
 	logprintf("micro loaded");
+	return true;
 }
 
 PLUGIN_EXPORT void PLUGIN_CALL
