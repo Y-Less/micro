@@ -1,25 +1,25 @@
-# This file demonstrates how to compile the sscanf project on Linux.
+# This file demonstrates how to compile the micro project on Linux.
 #
-# To compile SSCANF do:
+# To compile MICRO do:
 #
-# make SSCANF
+# make MICRO
 #
 
 GPP = g++
 GCC = gcc
-SSCANF_OUTFILE = "sscanf.so"
+MICRO_OUTFILE = "micro.so"
 
-COMPILE_FLAGS = -m32 -fPIC -c -O3 -w -D LINUX -D PROJECT_NAME=\"sscanf\" -D HAVE_STDINT_H -I ./SDK/amx/
+COMPILE_FLAGS = -m32 -fPIC -c -O3 -w -D LINUX -D PROJECT_NAME=\"micro\" -D HAVE_STDINT_H -I ./SDK/amx/
 
-SSCANF = -D SSCANF $(COMPILE_FLAGS)
+MICRO = -D MICRO $(COMPILE_FLAGS)
 
-all: SSCANF
+all: MICRO
 
 clean:
 	-rm -f *~ *.o *.so
 
-SSCANF: clean
-	$(GPP) $(SSCANF) ./SDK/amx/*.c
-	$(GPP) $(SSCANF) ./SDK/*.cpp
-	$(GPP) $(SSCANF) *.cpp
-	$(GPP) -m32 -O2 -fshort-wchar -shared -o $(SSCANF_OUTFILE) *.o
+MICRO: clean
+	$(GPP) $(MICRO) ./SDK/amx/*.c
+	$(GPP) $(MICRO) ./SDK/*.cpp
+	$(GPP) $(MICRO) *.cpp
+	$(GPP) -m32 -O2 -fshort-wchar -shared -o $(MICRO_OUTFILE) *.o

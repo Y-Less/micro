@@ -1,24 +1,24 @@
 {
     "user": "Y-Less",
-    "repo": "sscanf",
-    "contributors": ["Y_Less", "Emmet_", "maddinat0r"],
+    "repo": "micro",
+    "contributors": ["Y_Less"],
     "resources": [
         {
-            "name": "^sscanf-(.+)-linux.tar.gz$",
+            "name": "^micro-(.+)-linux.tar.gz$",
             "platform": "linux",
             "archive": true,
             "includes": ["pawno/include"],
-            "plugins": ["plugins/sscanf.so"]
+            "plugins": ["plugins/micro.so"]
         },
         {
-            "name": "^sscanf-(.*)-win32.zip$",
+            "name": "^micro-(.*)-win32.zip$",
             "platform": "windows",
             "archive": true,
             "includes": ["pawno/include"],
-            "plugins": ["plugins/sscanf.dll"]
+            "plugins": ["plugins/micro.dll"]
         }
     ],
     "runtime": {
-        "plugins": ["Y-Less/sscanf"]
+        "plugins": ["Y-Less/micro"]
     }
 }
